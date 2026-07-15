@@ -190,4 +190,57 @@ def promocion_eliminar(promo_id):
     db.session.delete(promo)
     db.session.commit()
     return redirect(url_for("admin.promociones"))
+# ---------- GESTIÓN DE EVENTOS ----------
+
+@admin_bp.route("/eventos")
+@admin_requerido
+def eventos():
+    lista = Evento.query.order_by(Evento.fecha).all()
+    return render_template("admin/eventos.html", eventos=lista)
+
+
+@admin_bp.route("/eventos/nuevo", methods=["GET", "POST"])
+@admin_requerido
+def evento_nuevo():
+    if request.method == "POST":
+        evento = Evento(
+            nombre_evento=request.form.get("nombre_evento"),
+            ubicacion=request.form.get("ubicacion"),
+            fecha=request.form.get("fecha"),
+            hora_inicio=request.form.get("hora_inicio") or None,
+            hora_fin=request.form.get("hora_fin") or None,
+            notas=request.form.get("notas")
+        )
+        db.session.add(evento)
+        db.session.commit()
+        return redirect(url_for("admin.eventos"))
+
+    return render_template("admin/evento_form.html", evento=None)
+
+
+@admin_bp.route("/eventos/<int:evento_id>/editar", methods=["GET", "POST"])
+@admin_requerido
+def evento_editar(evento_id):
+    evento = Evento.query.get_or_404(evento_id)
+
+    if request.method == "POST":
+        evento.nombre_evento = request.form.get("nombre_evento")
+        evento.ubicacion = request.form.get("ubicacion")
+        evento.fecha = request.form.get("fecha")
+        evento.hora_inicio = request.form.get("hora_inicio") or None
+        evento.hora_fin = request.form.get("hora_fin") or None
+        evento.notas = request.form.get("notas")
+        db.session.commit()
+        return redirect(url_for("admin.eventos"))
+
+    return render_template("admin/evento_form.html", evento=evento)
+
+
+@admin_bp.route("/eventos/<int:evento_id>/eliminar", methods=["POST"])
+@admin_requerido
+def evento_eliminar(evento_id):
+    evento = Evento.query.get_or_404(evento_id)
+    db.session.delete(evento)
+    db.session.commit()
+    return redirect(url_for("admin.eventos"))
 
