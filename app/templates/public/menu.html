@@ -1,14 +1,77 @@
-<h1>Menú - El Barril Steak House</h1>
+{% extends "public/base.html" %}
 
+{% block content %}
+
+<section class="px-gutter pt-lg pb-md">
+<h2 class="font-display-lg-mobile text-display-lg-mobile italic text-on-surface-variant">Nuestro Menú</h2>
+<p class="font-body-md text-secondary mt-xs">El auténtico sabor del fuego artesanal, servido con alma.</p>
+</section>
+
+<nav class="sticky top-[72px] z-30 bg-background/95 backdrop-blur-sm py-sm border-b border-outline-variant/30">
+<div class="flex overflow-x-auto hide-scrollbar gap-sm px-gutter">
 {% for categoria in categorias %}
-    <h2>{{ categoria.nombre_es }}</h2>
-    <ul>
-        {% for plato in categoria.platos %}
-            <li>
-                <strong>{{ plato.nombre_es }}</strong> — ${{ plato.precio }}
-                <br>
-                <small>{{ plato.descripcion_es }}</small>
-            </li>
-        {% endfor %}
-    </ul>
+<a href="#categoria-{{ categoria.id }}" class="whitespace-nowrap px-md py-2 rounded-full bg-surface-container-low text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">
+    {{ categoria.nombre_es }}
+</a>
 {% endfor %}
+</div>
+</nav>
+
+<div class="px-gutter space-y-xl pb-xl pt-md">
+{% for categoria in categorias %}
+<section id="categoria-{{ categoria.id }}">
+<div class="flex items-center gap-sm mb-md">
+<span class="w-2 h-2 bg-primary rotate-45"></span>
+<h3 class="font-headline-md text-headline-md italic">{{ categoria.nombre_es }}</h3>
+</div>
+<div class="grid grid-cols-1 gap-md">
+{% for plato in categoria.platos %}
+{% if plato.disponible %}
+<div class="burnt-edge bg-surface-container-low rounded-lg overflow-hidden flex flex-col">
+<div class="h-48 w-full bg-surface-variant flex items-center justify-center">
+{% if plato.imagen %}
+<img class="w-full h-full object-cover" src="{{ url_for('static', filename='uploads/' + plato.imagen) }}" alt="{{ plato.nombre_es }}">
+{% else %}
+<span class="material-symbols-outlined text-6xl text-outline">restaurant</span>
+{% endif %}
+</div>
+<div class="p-md relative">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm italic text-on-surface">{{ plato.nombre_es }}</h4>
+<span class="font-label-lg text-primary text-lg">${{ plato.precio }}</span>
+</div>
+<p class="font-body-md text-on-surface-variant mt-xs">{{ plato.descripcion_es }}</p>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</section>
+{% endfor %}
+</div>
+
+<section class="mx-gutter mb-xl">
+<div class="bg-surface-container-highest p-lg rounded-xl flex flex-col items-center text-center border-t-4 border-primary shadow-lg">
+<h4 class="font-headline-md text-headline-md italic text-primary">¿Hambre de más?</h4>
+<p class="font-body-md text-on-surface-variant mt-sm mb-md">Descubre nuestros combos familiares y ofertas especiales de temporada.</p>
+<a href="{{ url_for('public.home') }}#donde-estamos" class="bg-primary text-white px-lg py-3 rounded font-label-lg hover:bg-primary-container transition-all active:translate-y-0.5">
+    Promociones Activas
+</a>
+</div>
+</section>
+
+<script>
+        const tabs = document.querySelectorAll('nav a');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => {
+                    t.classList.remove('bg-primary-container', 'text-on-primary-container');
+                    t.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+                });
+                tab.classList.add('bg-primary-container', 'text-on-primary-container');
+                tab.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+            });
+        });
+</script>
+
+{% endblock %}
