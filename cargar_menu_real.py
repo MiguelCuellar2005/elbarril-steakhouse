@@ -68,3 +68,87 @@ with app.app_context():
     get_or_create_plato(cat_platos_ft.id, "Poutine con cerdo desmechado", "Poutine au porc effiloché", 18.50)
 
     print("Platos de 'Platos' (Food Truck) listos.")
+
+# ---------- CATEGORÍAS RESTO ----------
+    cat_principales_resto = get_or_create_categoria("resto", "Platos Principales", "Plats Principaux", 1)
+    cat_especial_resto = get_or_create_categoria("resto", "Plato Especial y Para Compartir", "Plat Spécial et À Partager", 2)
+    cat_cantina_resto = get_or_create_categoria("resto", "Cantina", "Cantina", 3)
+    cat_postres_resto = get_or_create_categoria("resto", "Postres", "Desserts", 4)
+
+    print("Categorías del Resto listas.")
+
+    # ---------- PLATOS: Platos Principales ----------
+    get_or_create_plato(
+        cat_principales_resto.id,
+        "Steak & papas (8 oz)",
+        "Steak & frites (8 oz)",
+        39.00
+    )
+    get_or_create_plato(
+        cat_principales_resto.id,
+        "Costillas al Néctar Negro (10 oz)",
+        "Côtes au Nectar Noir 10oz",
+        31.00
+    )
+    get_or_create_plato(
+        cat_principales_resto.id,
+        "Pollo a la parrilla (8 oz)",
+        "Poulet Grillé 8oz",
+        29.00
+    )
+
+    print("Platos de 'Platos Principales' (Resto) listos.")
+
+    # ---------- PLATOS: Plato Especial y Para Compartir ----------
+    get_or_create_plato(
+        cat_especial_resto.id,
+        "Bife angosto a la parrilla (8 oz)",
+        "Faux-filet grillé (8 oz)",
+        48.00
+    )
+    get_or_create_plato(
+        cat_especial_resto.id,
+        "Bife angosto a la parrilla (12 oz)",
+        "Faux-filet grillé (12 oz)",
+        52.00
+    )
+    get_or_create_plato(
+        cat_especial_resto.id,
+        "El Festín del Barril - Experiencia del Chef",
+        "Le Festin du Barril - Expérience du Chef",
+        85.00
+    )
+
+    print("Platos de 'Plato Especial y Para Compartir' (Resto) listos.")
+
+    # ---------- PLATOS: Cantina ----------
+    get_or_create_plato(
+        cat_cantina_resto.id,
+        "Cerdo crujiente",
+        "Porc Croustillant",
+        19.50
+    )
+    get_or_create_plato(
+        cat_cantina_resto.id,
+        "Choripán de Lujo",
+        "Choripán de Luxe",
+        19.50
+    )
+
+    print("Platos de 'Cantina' (Resto) listos.")
+
+    # ---------- PLATOS: Postres (Resto) ----------
+    get_or_create_plato(
+        cat_postres_resto.id,
+        "Quesillo (flan de caramelo)",
+        "Quesillo (flan au caramel)",
+        12.00
+    )
+    get_or_create_plato(
+        cat_postres_resto.id,
+        "Churros (6 piezas)",
+        "Churros (6 morceaux)",
+        12.00
+    )
+
+    print("Platos de 'Postres' (Resto) listos.")
