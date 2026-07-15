@@ -1,1 +1,33 @@
-<h1>El Barril Steak House - Inicio (en construcción)</h1>
+<h1>El Barril Steak House</h1>
+
+<h2>Promociones activas</h2>
+{% if promociones %}
+    <ul>
+        {% for promo in promociones %}
+            <li>
+                <strong>{{ promo.titulo_es }}</strong>
+                <br>
+                <small>{{ promo.descripcion_es }}</small>
+                <br>
+                Válida hasta: {{ promo.fecha_fin }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay promociones activas en este momento.</p>
+{% endif %}
+
+<h2>Próximos eventos</h2>
+{% if eventos %}
+    <ul>
+        {% for evento in eventos %}
+            <li>
+                <strong>{{ evento.nombre_evento }}</strong> — {{ evento.fecha }}
+                <br>
+                Ubicación: {{ evento.ubicacion }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aún no hay eventos programados.</p>
+{% endif %}
