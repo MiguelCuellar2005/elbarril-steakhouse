@@ -96,7 +96,9 @@
 <label class="block font-label-md text-sm text-on-surface-variant mb-1">Categoría</label>
 <select class="w-full h-12 px-4 bg-white border-2 border-on-surface/10 rounded-lg" name="categoria_id" required>
 {% for categoria in categorias %}
-<option value="{{ categoria.id }}" {% if plato and plato.categoria_id == categoria.id %}selected{% endif %}>{{ categoria.nombre_es }}</option>
+<option value="{{ categoria.id }}" {% if plato and plato.categoria_id == categoria.id %}selected{% endif %}>
+{% if categoria.tipo == 'foodtruck' %}🚚{% else %}🍽️{% endif %} {{ categoria.nombre_es }}
+</option>
 {% endfor %}
 </select>
 </div>
