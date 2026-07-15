@@ -66,4 +66,4 @@ def contacto():
 def cambiar_idioma(lang):
     if lang in ("fr", "en", "es"):
         session["idioma"] = lang
-    return "", 204
+    return redirect(request.referrer or url_for("public.home"))

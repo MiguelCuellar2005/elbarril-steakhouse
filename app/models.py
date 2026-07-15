@@ -13,6 +13,9 @@ class Categoria(db.Model):
     orden = db.Column(db.Integer, default=0)
 
     platos = db.relationship("Plato", backref="categoria", lazy=True)
+    def nombre(self, idioma="es"):
+        campo = getattr(self, f"nombre_{idioma}", None)
+        return campo or self.nombre_es
 
 
 class Plato(db.Model):
@@ -32,6 +35,14 @@ class Plato(db.Model):
     precio = db.Column(db.Numeric(6, 2), nullable=False)
     imagen = db.Column(db.String(255))
     disponible = db.Column(db.Boolean, default=True)
+
+    def nombre(self, idioma="es"):
+        campo = getattr(self, f"nombre_{idioma}", None)
+        return campo or self.nombre_es
+
+    def descripcion(self, idioma="es"):
+        campo = getattr(self, f"descripcion_{idioma}", None)
+        return campo or self.descripcion_es
 
 
 class Promocion(db.Model):
@@ -53,6 +64,14 @@ class Promocion(db.Model):
     def esta_activa(self):
         hoy = datetime.utcnow().date()
         return self.fecha_inicio <= hoy <= self.fecha_fin
+    
+    def titulo(self, idioma="es"):
+        campo = getattr(self, f"titulo_{idioma}", None)
+        return campo or self.titulo_es
+
+    def descripcion(self, idioma="es"):
+        campo = getattr(self, f"descripcion_{idioma}", None)
+        return campo or self.descripcion_es
 
 
 class Evento(db.Model):

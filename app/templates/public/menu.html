@@ -25,7 +25,7 @@
 <div class="flex overflow-x-auto hide-scrollbar gap-sm px-gutter">
 {% for categoria in categorias_foodtruck %}
 <a href="#cat-ft-{{ categoria.id }}" class="whitespace-nowrap px-md py-2 rounded-full bg-surface-container-low text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">
-    {{ categoria.nombre_es }}
+    {{ categoria.nombre(idioma) }}
 </a>
 {% endfor %}
 </div>
@@ -36,7 +36,7 @@
 <section id="cat-ft-{{ categoria.id }}">
 <div class="flex items-center gap-sm mb-md">
 <span class="w-2 h-2 bg-primary rotate-45"></span>
-<h3 class="font-headline-md text-headline-md italic">{{ categoria.nombre_es }}</h3>
+<h3 class="font-headline-md text-headline-md italic">{{ categoria.nombre(idioma) }}</h3>
 </div>
 <div class="grid grid-cols-1 gap-md">
 {% for plato in categoria.platos %}
@@ -44,17 +44,17 @@
 <div class="burnt-edge bg-surface-container-low rounded-lg overflow-hidden flex items-center">
 <div class="h-24 w-24 shrink-0 bg-surface-variant flex items-center justify-center">
 {% if plato.imagen %}
-<img class="w-full h-full object-cover" src="{{ url_for('static', filename='uploads/' + plato.imagen) }}" alt="{{ plato.nombre_es }}">
+<img class="w-full h-full object-cover" src="{{ url_for('static', filename='uploads/' + plato.imagen) }}" alt="{{ plato.nombre(idioma) }}">
 {% else %}
 <span class="material-symbols-outlined text-4xl text-outline">restaurant</span>
 {% endif %}
 </div>
 <div class="p-md flex-1">
 <div class="flex justify-between items-start">
-<h4 class="font-headline-sm text-headline-sm italic text-on-surface">{{ plato.nombre_es }}</h4>
+<h4 class="font-headline-sm text-headline-sm italic text-on-surface">{{ plato.nombre(idioma) }}</h4>
 <span class="font-label-lg text-primary text-lg">${{ plato.precio }}</span>
 </div>
-<p class="font-body-md text-on-surface-variant text-sm mt-xs leading-tight">{{ plato.descripcion_es }}</p>
+<p class="font-body-md text-on-surface-variant text-sm mt-xs leading-tight">{{ plato.descripcion(idioma) }}</p>
 </div>
 </div>
 {% endif %}
@@ -75,7 +75,7 @@
 <div class="flex overflow-x-auto hide-scrollbar gap-sm px-gutter">
 {% for categoria in categorias_resto %}
 <a href="#cat-resto-{{ categoria.id }}" class="whitespace-nowrap px-md py-2 rounded-full bg-surface-container-low text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">
-    {{ categoria.nombre_es }}
+    {{ categoria.nombre(idioma) }}
 </a>
 {% endfor %}
 </div>
@@ -86,7 +86,7 @@
 <section id="cat-resto-{{ categoria.id }}">
 <div class="flex items-center gap-sm mb-md">
 <span class="w-2 h-2 bg-primary rotate-45"></span>
-<h3 class="font-headline-md text-headline-md italic">{{ categoria.nombre_es }}</h3>
+<h3 class="font-headline-md text-headline-md italic">{{ categoria.nombre(idioma) }}</h3>
 </div>
 <div class="grid grid-cols-1 gap-md">
 {% for plato in categoria.platos %}
@@ -94,17 +94,17 @@
 <div class="burnt-edge bg-surface-container-low rounded-lg overflow-hidden flex items-center">
 <div class="h-24 w-24 shrink-0 bg-surface-variant flex items-center justify-center">
 {% if plato.imagen %}
-<img class="w-full h-full object-cover" src="{{ url_for('static', filename='uploads/' + plato.imagen) }}" alt="{{ plato.nombre_es }}">
+<img class="w-full h-full object-cover" src="{{ url_for('static', filename='uploads/' + plato.imagen) }}" alt="{{ plato.nombre(idioma) }}">
 {% else %}
 <span class="material-symbols-outlined text-4xl text-outline">restaurant</span>
 {% endif %}
 </div>
 <div class="p-md flex-1">
 <div class="flex justify-between items-start">
-<h4 class="font-headline-sm text-headline-sm italic text-on-surface">{{ plato.nombre_es }}</h4>
+<h4 class="font-headline-sm text-headline-sm italic text-on-surface">{{ plato.nombre(idioma) }}</h4>
 <span class="font-label-lg text-primary text-lg">${{ plato.precio }}</span>
 </div>
-<p class="font-body-md text-on-surface-variant text-sm mt-xs leading-tight">{{ plato.descripcion_es }}</p>
+<p class="font-body-md text-on-surface-variant text-sm mt-xs leading-tight">{{ plato.descripcion(idioma) }}</p>
 </div>
 </div>
 {% endif %}

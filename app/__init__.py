@@ -20,4 +20,9 @@ def create_app():
     app.register_blueprint(public_bp)
     app.register_blueprint(admin_bp, url_prefix="/admin")
 
+    @app.context_processor
+    def inject_idioma():
+        from flask import session
+        return {"idioma": session.get("idioma", "es")}
+
     return app
