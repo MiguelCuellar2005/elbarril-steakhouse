@@ -28,8 +28,13 @@ def home():
 
 @public_bp.route("/menu")
 def menu():
-    categorias = Categoria.query.order_by(Categoria.orden).all()
-    return render_template("public/menu.html", categorias=categorias)
+    categorias_foodtruck = Categoria.query.filter_by(tipo="foodtruck").order_by(Categoria.orden).all()
+    categorias_resto = Categoria.query.filter_by(tipo="resto").order_by(Categoria.orden).all()
+    return render_template(
+        "public/menu.html",
+        categorias_foodtruck=categorias_foodtruck,
+        categorias_resto=categorias_resto
+    )
 
 
 @public_bp.route("/contacto", methods=["GET", "POST"])

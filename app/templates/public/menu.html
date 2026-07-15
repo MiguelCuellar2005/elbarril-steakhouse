@@ -7,10 +7,24 @@
 <p class="font-body-md text-secondary mt-xs">El auténtico sabor del fuego artesanal, servido con alma.</p>
 </section>
 
+<!-- Selector Food Truck / Resto -->
+<div class="px-gutter mb-md">
+<div class="flex gap-sm bg-surface-container-low p-1 rounded-full border border-outline-variant/30">
+<button onclick="mostrarMenu('foodtruck')" id="btn-foodtruck" class="flex-1 py-3 rounded-full font-label-lg text-label-lg transition-colors bg-primary-container text-on-primary-container">
+🚚 Food Truck
+</button>
+<button onclick="mostrarMenu('resto')" id="btn-resto" class="flex-1 py-3 rounded-full font-label-lg text-label-lg transition-colors text-on-surface-variant">
+🍽️ Resto
+</button>
+</div>
+</div>
+
+<!-- MENÚ FOOD TRUCK -->
+<div id="menu-foodtruck">
 <nav class="sticky top-[72px] z-30 bg-background/95 backdrop-blur-sm py-sm border-b border-outline-variant/30">
 <div class="flex overflow-x-auto hide-scrollbar gap-sm px-gutter">
-{% for categoria in categorias %}
-<a href="#categoria-{{ categoria.id }}" class="whitespace-nowrap px-md py-2 rounded-full bg-surface-container-low text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">
+{% for categoria in categorias_foodtruck %}
+<a href="#cat-ft-{{ categoria.id }}" class="whitespace-nowrap px-md py-2 rounded-full bg-surface-container-low text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">
     {{ categoria.nombre_es }}
 </a>
 {% endfor %}
@@ -18,8 +32,8 @@
 </nav>
 
 <div class="px-gutter space-y-xl pb-xl pt-md">
-{% for categoria in categorias %}
-<section id="categoria-{{ categoria.id }}">
+{% for categoria in categorias_foodtruck %}
+<section id="cat-ft-{{ categoria.id }}">
 <div class="flex items-center gap-sm mb-md">
 <span class="w-2 h-2 bg-primary rotate-45"></span>
 <h3 class="font-headline-md text-headline-md italic">{{ categoria.nombre_es }}</h3>
@@ -48,6 +62,61 @@
 </div>
 </section>
 {% endfor %}
+
+{% if not categorias_foodtruck %}
+<p class="text-center text-on-surface-variant py-8">Aún no hay platos cargados para el Food Truck.</p>
+{% endif %}
+</div>
+</div>
+
+<!-- MENÚ RESTO (oculto inicialmente) -->
+<div id="menu-resto" class="hidden">
+<nav class="sticky top-[72px] z-30 bg-background/95 backdrop-blur-sm py-sm border-b border-outline-variant/30">
+<div class="flex overflow-x-auto hide-scrollbar gap-sm px-gutter">
+{% for categoria in categorias_resto %}
+<a href="#cat-resto-{{ categoria.id }}" class="whitespace-nowrap px-md py-2 rounded-full bg-surface-container-low text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">
+    {{ categoria.nombre_es }}
+</a>
+{% endfor %}
+</div>
+</nav>
+
+<div class="px-gutter space-y-xl pb-xl pt-md">
+{% for categoria in categorias_resto %}
+<section id="cat-resto-{{ categoria.id }}">
+<div class="flex items-center gap-sm mb-md">
+<span class="w-2 h-2 bg-primary rotate-45"></span>
+<h3 class="font-headline-md text-headline-md italic">{{ categoria.nombre_es }}</h3>
+</div>
+<div class="grid grid-cols-1 gap-md">
+{% for plato in categoria.platos %}
+{% if plato.disponible %}
+<div class="burnt-edge bg-surface-container-low rounded-lg overflow-hidden flex items-center">
+<div class="h-24 w-24 shrink-0 bg-surface-variant flex items-center justify-center">
+{% if plato.imagen %}
+<img class="w-full h-full object-cover" src="{{ url_for('static', filename='uploads/' + plato.imagen) }}" alt="{{ plato.nombre_es }}">
+{% else %}
+<span class="material-symbols-outlined text-4xl text-outline">restaurant</span>
+{% endif %}
+</div>
+<div class="p-md flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm italic text-on-surface">{{ plato.nombre_es }}</h4>
+<span class="font-label-lg text-primary text-lg">${{ plato.precio }}</span>
+</div>
+<p class="font-body-md text-on-surface-variant text-sm mt-xs leading-tight">{{ plato.descripcion_es }}</p>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</section>
+{% endfor %}
+
+{% if not categorias_resto %}
+<p class="text-center text-on-surface-variant py-8">Aún no hay platos cargados para el Resto.</p>
+{% endif %}
+</div>
 </div>
 
 <section class="mx-gutter mb-xl">
@@ -61,17 +130,28 @@
 </section>
 
 <script>
-        const tabs = document.querySelectorAll('nav a');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => {
-                    t.classList.remove('bg-primary-container', 'text-on-primary-container');
-                    t.classList.add('bg-surface-container-low', 'text-on-surface-variant');
-                });
-                tab.classList.add('bg-primary-container', 'text-on-primary-container');
-                tab.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
-            });
-        });
+        function mostrarMenu(tipo) {
+            const foodtruck = document.getElementById('menu-foodtruck');
+            const resto = document.getElementById('menu-resto');
+            const btnFoodtruck = document.getElementById('btn-foodtruck');
+            const btnResto = document.getElementById('btn-resto');
+
+            if (tipo === 'foodtruck') {
+                foodtruck.classList.remove('hidden');
+                resto.classList.add('hidden');
+                btnFoodtruck.classList.add('bg-primary-container', 'text-on-primary-container');
+                btnFoodtruck.classList.remove('text-on-surface-variant');
+                btnResto.classList.remove('bg-primary-container', 'text-on-primary-container');
+                btnResto.classList.add('text-on-surface-variant');
+            } else {
+                resto.classList.remove('hidden');
+                foodtruck.classList.add('hidden');
+                btnResto.classList.add('bg-primary-container', 'text-on-primary-container');
+                btnResto.classList.remove('text-on-surface-variant');
+                btnFoodtruck.classList.remove('bg-primary-container', 'text-on-primary-container');
+                btnFoodtruck.classList.add('text-on-surface-variant');
+            }
+        }
 </script>
 
 {% endblock %}
