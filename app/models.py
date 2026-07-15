@@ -64,3 +64,16 @@ class Evento(db.Model):
     hora_inicio = db.Column(db.Time)
     hora_fin = db.Column(db.Time)
     notas = db.Column(db.Text)
+
+class SolicitudCatering(db.Model):
+    __tablename__ = "solicitudes_catering"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(150), nullable=False)
+    telefono = db.Column(db.String(30), nullable=False)
+    fecha_evento = db.Column(db.Date)
+    num_personas = db.Column(db.Integer)
+    tipo_evento = db.Column(db.String(100))
+    mensaje = db.Column(db.Text)
+    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+    atendida = db.Column(db.Boolean, default=False)

@@ -2,6 +2,16 @@
 
 {% block content %}
 
+{% with mensajes = get_flashed_messages() %}
+{% if mensajes %}
+<div class="mx-margin-mobile mt-lg mb-md p-md bg-primary/10 border border-primary rounded-xl text-primary text-center font-label-lg">
+{% for mensaje in mensajes %}
+{{ mensaje }}
+{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
 <section class="px-margin-mobile mb-xl text-center pt-lg">
 <h2 class="font-headline-lg-mobile text-headline-lg-mobile italic text-primary mb-sm">Contáctanos</h2>
 <p class="text-on-surface-variant font-body-lg text-body-lg max-w-xs mx-auto">
