@@ -1,19 +1,18 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, current_app
-from app.models import Plato, Promocion, Evento, SolicitudCatering
+from app.models import Plato, Categoria, Promocion, Evento, SolicitudCatering
+from app import db
 from datetime import date
+from functools import wraps
 
 admin_bp = Blueprint("admin", __name__)
 
 
 def admin_requerido(vista):
-    from functools import wraps
-
     @wraps(vista)
     def envoltura(*args, **kwargs):
         if not session.get("admin_autenticado"):
             return redirect(url_for("admin.login"))
         return vista(*args, **kwargs)
-
     return envoltura
 
 
@@ -33,6 +32,12 @@ def login():
         return render_template("admin/login.html", error="Usuario o contraseña incorrectos")
 
     return render_template("admin/login.html")
+
+
+@admin_bp.route("/logout")
+def logout():
+    session.pop("admin_autenticado", None)
+    return redirect(url_for("admin.login"))
 
 
 @admin_bp.route("/dashboard")
@@ -57,7 +62,74 @@ def dashboard():
     )
 
 
-@admin_bp.route("/logout")
-def logout():
-    session.pop("admin_autenticado", None)
-    return redirect(url_for("admin.login"))
+# ---------- GESTIÓN DE PLATOS ----------
+
+@admin_bp.route("/platos")
+@admin_requerido
+def platos():
+    categorias = Categoria.query.order_by(Categoria.orden).all()
+    return render_template("admin/platos.html", categorias=categorias)
+
+
+@admin_bp.route("/platos/nuevo", methods=["GET", "POST"])
+@admin_requerido
+def plato_nuevo():
+    categorias = Categoria.query.order_by(Categoria.orden).all()
+
+    if request.method == "POST":
+        plato = Plato(
+            categoria_id=request.form.get("categoria_id"),
+            nombre_es=request.form.get("nombre_es"),
+            nombre_en=request.form.get("nombre_en"),
+            nombre_fr=request.form.get("nombre_fr"),
+            descripcion_es=request.form.get("descripcion_es"),
+            descripcion_en=request.form.get("descripcion_en"),
+            descripcion_fr=request.form.get("descripcion_fr"),
+            precio=request.form.get("precio"),
+            disponible=bool(request.form.get("disponible"))
+        )
+        db.session.add(plato)
+        db.session.commit()
+        return redirect(url_for("admin.platos"))
+
+    return render_template("admin/plato_form.html", categorias=categorias, plato=None)
+
+
+@admin_bp.route("/platos/<int:plato_id>/editar", methods=["GET", "POST"])
+@admin_requerido
+def plato_editar(plato_id):
+    plato = Plato.query.get_or_404(plato_id)
+    categorias = Categoria.query.order_by(Categoria.orden).all()
+
+    if request.method == "POST":
+        plato.categoria_id = request.form.get("categoria_id")
+        plato.nombre_es = request.form.get("nombre_es")
+        plato.nombre_en = request.form.get("nombre_en")
+        plato.nombre_fr = request.form.get("nombre_fr")
+        plato.descripcion_es = request.form.get("descripcion_es")
+        plato.descripcion_en = request.form.get("descripcion_en")
+        plato.descripcion_fr = request.form.get("descripcion_fr")
+        plato.precio = request.form.get("precio")
+        plato.disponible = bool(request.form.get("disponible"))
+        db.session.commit()
+        return redirect(url_for("admin.platos"))
+
+    return render_template("admin/plato_form.html", categorias=categorias, plato=plato)
+
+
+@admin_bp.route("/platos/<int:plato_id>/eliminar", methods=["POST"])
+@admin_requerido
+def plato_eliminar(plato_id):
+    plato = Plato.query.get_or_404(plato_id)
+    db.session.delete(plato)
+    db.session.commit()
+    return redirect(url_for("admin.platos"))
+
+
+@admin_bp.route("/platos/<int:plato_id>/toggle", methods=["POST"])
+@admin_requerido
+def plato_toggle(plato_id):
+    plato = Plato.query.get_or_404(plato_id)
+    plato.disponible = not plato.disponible
+    db.session.commit()
+    return redirect(url_for("admin.platos"))
