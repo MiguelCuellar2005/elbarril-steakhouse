@@ -133,3 +133,61 @@ def plato_toggle(plato_id):
     plato.disponible = not plato.disponible
     db.session.commit()
     return redirect(url_for("admin.platos"))
+# ---------- GESTIÓN DE PROMOCIONES ----------
+
+@admin_bp.route("/promociones")
+@admin_requerido
+def promociones():
+    lista = Promocion.query.order_by(Promocion.fecha_inicio.desc()).all()
+    return render_template("admin/promociones.html", promociones=lista)
+
+
+@admin_bp.route("/promociones/nueva", methods=["GET", "POST"])
+@admin_requerido
+def promocion_nueva():
+    if request.method == "POST":
+        promo = Promocion(
+            titulo_es=request.form.get("titulo_es"),
+            titulo_en=request.form.get("titulo_en"),
+            titulo_fr=request.form.get("titulo_fr"),
+            descripcion_es=request.form.get("descripcion_es"),
+            descripcion_en=request.form.get("descripcion_en"),
+            descripcion_fr=request.form.get("descripcion_fr"),
+            fecha_inicio=request.form.get("fecha_inicio"),
+            fecha_fin=request.form.get("fecha_fin")
+        )
+        db.session.add(promo)
+        db.session.commit()
+        return redirect(url_for("admin.promociones"))
+
+    return render_template("admin/promocion_form.html", promocion=None)
+
+
+@admin_bp.route("/promociones/<int:promo_id>/editar", methods=["GET", "POST"])
+@admin_requerido
+def promocion_editar(promo_id):
+    promo = Promocion.query.get_or_404(promo_id)
+
+    if request.method == "POST":
+        promo.titulo_es = request.form.get("titulo_es")
+        promo.titulo_en = request.form.get("titulo_en")
+        promo.titulo_fr = request.form.get("titulo_fr")
+        promo.descripcion_es = request.form.get("descripcion_es")
+        promo.descripcion_en = request.form.get("descripcion_en")
+        promo.descripcion_fr = request.form.get("descripcion_fr")
+        promo.fecha_inicio = request.form.get("fecha_inicio")
+        promo.fecha_fin = request.form.get("fecha_fin")
+        db.session.commit()
+        return redirect(url_for("admin.promociones"))
+
+    return render_template("admin/promocion_form.html", promocion=promo)
+
+
+@admin_bp.route("/promociones/<int:promo_id>/eliminar", methods=["POST"])
+@admin_requerido
+def promocion_eliminar(promo_id):
+    promo = Promocion.query.get_or_404(promo_id)
+    db.session.delete(promo)
+    db.session.commit()
+    return redirect(url_for("admin.promociones"))
+
