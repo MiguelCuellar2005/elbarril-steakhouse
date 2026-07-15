@@ -1,1 +1,14 @@
-<h1>Menú (en construcción)</h1>
+<h1>Menú - El Barril Steak House</h1>
+
+{% for categoria in categorias %}
+    <h2>{{ categoria.nombre_es }}</h2>
+    <ul>
+        {% for plato in categoria.platos %}
+            <li>
+                <strong>{{ plato.nombre_es }}</strong> — ${{ plato.precio }}
+                <br>
+                <small>{{ plato.descripcion_es }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+{% endfor %}

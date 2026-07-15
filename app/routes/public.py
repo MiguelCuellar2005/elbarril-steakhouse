@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, session, request
 
+from app.models import Categoria
+
 public_bp = Blueprint("public", __name__)
 
 
@@ -11,8 +13,8 @@ def home():
 
 @public_bp.route("/menu")
 def menu():
-    # TODO: traer categorías y platos ordenados
-    return render_template("public/menu.html")
+    categorias = Categoria.query.order_by(Categoria.orden).all()
+    return render_template("public/menu.html", categorias=categorias)
 
 
 @public_bp.route("/contacto")
