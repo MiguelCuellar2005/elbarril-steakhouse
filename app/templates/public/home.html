@@ -5,7 +5,9 @@
 <!-- Hero -->
 <section class="relative h-[85vh] w-full flex items-end pb-xxl px-gutter">
 <div class="absolute inset-0 z-0">
-<div class="w-full h-full bg-cover bg-center" style="background-image: url('{{ url_for('static', filename='uploads/hero.jpeg') }}')"></div>
+<video class="w-full h-full object-cover" autoplay muted loop playsinline>
+<source src="{{ url_for('static', filename='uploads/hero.mp4') }}" type="video/mp4">
+</video>
 <div class="absolute inset-0 bg-gradient-to-t from-[#1b1d0e]/90 via-[#1b1d0e]/30 to-transparent"></div>
 </div>
 <div class="relative z-10 w-full max-w-container-max mx-auto">
