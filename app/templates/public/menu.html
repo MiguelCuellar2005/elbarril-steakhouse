@@ -27,20 +27,20 @@
 <div class="grid grid-cols-1 gap-md">
 {% for plato in categoria.platos %}
 {% if plato.disponible %}
-<div class="burnt-edge bg-surface-container-low rounded-lg overflow-hidden flex flex-col">
-<div class="h-48 w-full bg-surface-variant flex items-center justify-center">
+<div class="burnt-edge bg-surface-container-low rounded-lg overflow-hidden flex items-center">
+<div class="h-24 w-24 shrink-0 bg-surface-variant flex items-center justify-center">
 {% if plato.imagen %}
 <img class="w-full h-full object-cover" src="{{ url_for('static', filename='uploads/' + plato.imagen) }}" alt="{{ plato.nombre_es }}">
 {% else %}
-<span class="material-symbols-outlined text-6xl text-outline">restaurant</span>
+<span class="material-symbols-outlined text-4xl text-outline">restaurant</span>
 {% endif %}
 </div>
-<div class="p-md relative">
+<div class="p-md flex-1">
 <div class="flex justify-between items-start">
 <h4 class="font-headline-sm text-headline-sm italic text-on-surface">{{ plato.nombre_es }}</h4>
 <span class="font-label-lg text-primary text-lg">${{ plato.precio }}</span>
 </div>
-<p class="font-body-md text-on-surface-variant mt-xs">{{ plato.descripcion_es }}</p>
+<p class="font-body-md text-on-surface-variant text-sm mt-xs leading-tight">{{ plato.descripcion_es }}</p>
 </div>
 </div>
 {% endif %}

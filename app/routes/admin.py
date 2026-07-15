@@ -3,6 +3,9 @@ from app.models import Plato, Categoria, Promocion, Evento, SolicitudCatering
 from app import db
 from datetime import date
 from functools import wraps
+import os
+import uuid
+from werkzeug.utils import secure_filename
 
 admin_bp = Blueprint("admin", __name__)
 
@@ -71,12 +74,31 @@ def platos():
     return render_template("admin/platos.html", categorias=categorias)
 
 
+EXTENSIONES_PERMITIDAS = {"png", "jpg", "jpeg", "webp"}
+
+
+def extension_permitida(nombre_archivo):
+    return "." in nombre_archivo and nombre_archivo.rsplit(".", 1)[1].lower() in EXTENSIONES_PERMITIDAS
+
+
+def guardar_imagen(archivo):
+    if archivo and archivo.filename and extension_permitida(archivo.filename):
+        extension = archivo.filename.rsplit(".", 1)[1].lower()
+        nombre_unico = f"{uuid.uuid4().hex}.{extension}"
+        ruta_completa = os.path.join(current_app.config["UPLOAD_FOLDER"], nombre_unico)
+        archivo.save(ruta_completa)
+        return nombre_unico
+    return None
+
+
 @admin_bp.route("/platos/nuevo", methods=["GET", "POST"])
 @admin_requerido
 def plato_nuevo():
     categorias = Categoria.query.order_by(Categoria.orden).all()
 
     if request.method == "POST":
+        nombre_imagen = guardar_imagen(request.files.get("imagen"))
+
         plato = Plato(
             categoria_id=request.form.get("categoria_id"),
             nombre_es=request.form.get("nombre_es"),
@@ -86,6 +108,7 @@ def plato_nuevo():
             descripcion_en=request.form.get("descripcion_en"),
             descripcion_fr=request.form.get("descripcion_fr"),
             precio=request.form.get("precio"),
+            imagen=nombre_imagen,
             disponible=bool(request.form.get("disponible"))
         )
         db.session.add(plato)
@@ -102,6 +125,10 @@ def plato_editar(plato_id):
     categorias = Categoria.query.order_by(Categoria.orden).all()
 
     if request.method == "POST":
+        nombre_imagen = guardar_imagen(request.files.get("imagen"))
+        if nombre_imagen:
+            plato.imagen = nombre_imagen
+
         plato.categoria_id = request.form.get("categoria_id")
         plato.nombre_es = request.form.get("nombre_es")
         plato.nombre_en = request.form.get("nombre_en")
