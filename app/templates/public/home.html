@@ -12,15 +12,15 @@
 </div>
 <div class="relative z-10 w-full max-w-container-max mx-auto">
 <h2 class="font-display-lg text-[42px] leading-tight text-white mb-xl italic">
-    EL BARRIL <br/>
-    <span class="text-primary-fixed">STEAK HOUSE</span>
+    {{ t('hero_titulo_1') }} <br/>
+    <span class="text-primary-fixed">{{ t('hero_titulo_2') }}</span>
 </h2>
 <div class="flex flex-col gap-md">
 <a href="{{ url_for('public.menu') }}" class="bg-primary hover:bg-primary-container text-white py-md px-xl rounded-lg font-label-lg text-label-lg uppercase tracking-widest transition-all shadow-[0_4px_12px_rgba(143,0,13,0.3)] active:scale-95 border-t border-white/10 text-center">
-    Ver menú
+    {{ t('btn_ver_menu') }}
 </a>
 <a href="#donde-estamos" class="border-2 border-white text-white py-md px-xl rounded-lg font-label-lg text-label-lg uppercase tracking-widest transition-all bg-white/5 backdrop-blur-sm active:scale-95 text-center">
-    Dónde estamos hoy
+    {{ t('btn_donde_hoy') }}
 </a>
 </div>
 </div>
@@ -34,8 +34,8 @@
 <span class="material-symbols-outlined">restaurant</span>
 </div>
 <div>
-<h3 class="font-headline-md text-headline-md leading-none text-primary">Menú</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Cortes premium a la leña</p>
+<h3 class="font-headline-md text-headline-md leading-none text-primary">{{ t('card_menu_titulo') }}</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">{{ t('card_menu_desc') }}</p>
 </div>
 </a>
 
@@ -44,13 +44,13 @@
 <span class="material-symbols-outlined">location_pin</span>
 </div>
 <div>
-<h3 class="font-headline-md text-headline-md leading-none text-primary">Dónde estamos</h3>
+<h3 class="font-headline-md text-headline-md leading-none text-primary">{{ t('card_donde_titulo') }}</h3>
 {% if eventos %}
 <p class="font-body-md text-body-md text-on-surface-variant">
     {{ eventos[0].nombre_evento }} — {{ eventos[0].ubicacion }} ({{ eventos[0].fecha }})
 </p>
 {% else %}
-<p class="font-body-md text-body-md text-on-surface-variant">Consulta nuestras redes para la ubicación de hoy</p>
+<p class="font-body-md text-body-md text-on-surface-variant">{{ t('card_donde_default') }}</p>
 {% endif %}
 </div>
 </div>
@@ -60,11 +60,11 @@
 <span class="material-symbols-outlined">sell</span>
 </div>
 <div>
-<h3 class="font-headline-md text-headline-md leading-none text-primary">Promociones</h3>
+<h3 class="font-headline-md text-headline-md leading-none text-primary">{{ t('card_promo_titulo') }}</h3>
 {% if promociones %}
-<p class="font-body-md text-body-md text-on-surface-variant">{{ promociones[0].titulo_es }}</p>
+<p class="font-body-md text-body-md text-on-surface-variant">{{ promociones[0].titulo(idioma) }}</p>
 {% else %}
-<p class="font-body-md text-body-md text-on-surface-variant">Sin promociones activas por ahora</p>
+<p class="font-body-md text-body-md text-on-surface-variant">{{ t('card_promo_default') }}</p>
 {% endif %}
 </div>
 </div>
@@ -74,11 +74,11 @@
 <!-- De dónde venimos -->
 <section class="py-xxl px-gutter bg-background relative overflow-hidden">
 <div class="relative z-10 flex flex-col items-center text-center">
-<span class="text-primary font-label-lg text-label-lg tracking-[0.2em] uppercase mb-md">Nuestra Historia</span>
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-lg italic">De dónde venimos</h2>
+<span class="text-primary font-label-lg text-label-lg tracking-[0.2em] uppercase mb-md">{{ t('historia_label') }}</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-lg italic">{{ t('historia_titulo') }}</h2>
 <div class="w-12 h-1 bg-primary mb-xl"></div>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-xl leading-relaxed">
-    Nuestra pasión nació entre el humo de las brasas y la tradición familiar de domar el fuego. No solo cocinamos carne; honramos el ritual del barril, donde el calor indirecto y la leña seleccionada crean una textura y sabor inigualables.
+    {{ t('historia_texto') }}
 </p>
 </div>
 </section>
@@ -89,12 +89,12 @@
 <div class="bg-primary p-lg rounded-full mb-md">
 <span class="material-symbols-outlined text-4xl text-white">outdoor_grill</span>
 </div>
-<h2 class="font-headline-lg text-headline-lg text-primary-fixed italic">Llevamos el Barril a tu evento</h2>
+<h2 class="font-headline-lg text-headline-lg text-primary-fixed italic">{{ t('catering_titulo') }}</h2>
 <p class="font-body-md text-body-md opacity-90 max-w-sm">
-    Desde reuniones familiares hasta eventos corporativos. Disfruta del sabor premium de la leña en cualquier lugar.
+    {{ t('catering_texto') }}
 </p>
 <a href="{{ url_for('public.contacto') }}" class="bg-primary hover:bg-primary-container text-white py-md px-[48px] rounded-lg font-label-lg text-label-lg uppercase transition-all shadow-xl active:scale-95 border border-white/10 mt-md">
-    Contactar
+    {{ t('btn_contactar') }}
 </a>
 </div>
 </section>

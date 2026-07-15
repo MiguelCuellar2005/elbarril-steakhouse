@@ -13,9 +13,9 @@
 {% endwith %}
 
 <section class="px-margin-mobile mb-xl text-center pt-lg">
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile italic text-primary mb-sm">Contáctanos</h2>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile italic text-primary mb-sm">{{ t('contacto_titulo') }}</h2>
 <p class="text-on-surface-variant font-body-lg text-body-lg max-w-xs mx-auto">
-    Parrilla caliente y sazón latino esperándote
+    {{ t('contacto_subtitulo') }}
 </p>
 </section>
 
@@ -24,7 +24,7 @@
 <svg fill="currentColor" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
 </svg>
-<span class="font-label-lg text-label-lg tracking-wider">Escríbenos por WhatsApp</span>
+<span class="font-label-lg text-label-lg tracking-wider">{{ t('btn_whatsapp') }}</span>
 </a>
 </section>
 
@@ -35,7 +35,7 @@
 <span class="material-symbols-outlined">call</span>
 </div>
 <div>
-<span class="block text-label-sm text-on-surface-variant">Llámanos directo</span>
+<span class="block text-label-sm text-on-surface-variant">{{ t('llamanos') }}</span>
 <p class="font-label-lg text-label-lg text-primary">418-906-6654</p>
 </div>
 </a>
@@ -45,7 +45,7 @@
 <span class="material-symbols-outlined">sms</span>
 </div>
 <div>
-<span class="block text-label-sm text-on-surface-variant">Escríbenos un mensaje de texto</span>
+<span class="block text-label-sm text-on-surface-variant">{{ t('sms') }}</span>
 <p class="font-label-lg text-label-lg text-primary">418-906-6654</p>
 </div>
 </a>
@@ -65,31 +65,31 @@
 
 <section class="bg-surface-container py-xl px-margin-mobile rounded-t-[40px] border-t border-outline-variant">
 <div class="mb-lg">
-<h3 class="font-headline-md text-headline-md italic text-primary pb-2 mb-sm">Catering para tus eventos</h3>
+<h3 class="font-headline-md text-headline-md italic text-primary pb-2 mb-sm">{{ t('catering_form_titulo') }}</h3>
 <p class="text-on-surface-variant text-body-md leading-relaxed">
-    Llevamos el sabor del barril directo a tu fiesta. Cuéntanos qué tienes en mente y nosotros ponemos la leña.
+    {{ t('catering_form_texto') }}
 </p>
 </div>
 <form class="flex flex-col gap-md" method="POST" action="{{ url_for('public.contacto') }}">
 <div class="relative">
-<input class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant text-body-md" name="nombre" placeholder="Nombre completo" type="text"/>
+<input class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant text-body-md" name="nombre" placeholder="{{ t('form_nombre') }}" type="text"/>
 </div>
 <div class="relative">
-<input class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant text-body-md" name="telefono" placeholder="Teléfono" type="tel"/>
+<input class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant text-body-md" name="telefono" placeholder="{{ t('form_telefono') }}" type="tel"/>
 </div>
 <div class="grid grid-cols-2 gap-gutter">
 <div class="relative">
-<label class="text-[10px] uppercase font-bold text-outline tracking-widest pl-base">Fecha</label>
+<label class="text-[10px] uppercase font-bold text-outline tracking-widest pl-base">{{ t('form_fecha') }}</label>
 <input class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors text-body-md" name="fecha_evento" type="date"/>
 </div>
 <div class="relative">
-<label class="text-[10px] uppercase font-bold text-outline tracking-widest pl-base">Personas</label>
+<label class="text-[10px] uppercase font-bold text-outline tracking-widest pl-base">{{ t('form_personas') }}</label>
 <input class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant text-body-md" name="num_personas" placeholder="Ej. 20" type="number"/>
 </div>
 </div>
 <div class="relative">
 <select class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors text-body-md text-on-surface" name="tipo_evento">
-<option disabled selected value="">Tipo de evento</option>
+<option disabled selected value="">{{ t('form_tipo_evento') }}</option>
 <option>Boda</option>
 <option>Cumpleaños</option>
 <option>Evento Corporativo</option>
@@ -97,19 +97,19 @@
 </select>
 </div>
 <div class="relative">
-<textarea class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant text-body-md resize-none" name="mensaje" placeholder="Cuéntanos más detalles..." rows="4"></textarea>
+<textarea class="w-full bg-surface py-4 px-base border-b-2 border-outline-variant focus:border-primary focus:ring-0 transition-colors placeholder:text-outline-variant text-body-md resize-none" name="mensaje" placeholder="{{ t('form_mensaje') }}" rows="4"></textarea>
 </div>
 <button class="mt-md w-full bg-primary text-on-primary font-label-lg text-label-lg py-5 rounded-lg active:scale-95 transition-all shadow-md" type="submit">
-    Enviar solicitud
+    {{ t('form_enviar') }}
 </button>
 </form>
 </section>
 
 <section class="px-margin-mobile py-xl bg-background">
 <div class="mb-lg">
-<h3 class="font-headline-md text-headline-md italic text-primary pb-2 mb-sm">Nuestro cuartel general</h3>
+<h3 class="font-headline-md text-headline-md italic text-primary pb-2 mb-sm">{{ t('cuartel_titulo') }}</h3>
 <p class="text-on-surface-variant text-body-md">
-    Somos un Food Truck, así que nuestro corazón está en el camino, pero esta es la base donde ocurre la magia.
+    {{ t('cuartel_texto') }}
 </p>
 </div>
 <div class="relative rounded-2xl overflow-hidden shadow-sm h-64 border border-outline-variant flex items-center justify-center bg-surface-container-high">
@@ -120,7 +120,7 @@
 </div>
 <div class="mt-lg p-md bg-surface-container-high rounded-xl border-l-4 border-primary">
 <p class="text-on-surface-variant italic font-body-md leading-relaxed">
-    "A veces estamos en festivales, a veces en el puerto. Síguenos en Instagram para saber dónde encenderemos el fuego hoy."
+    {{ t('cuartel_cita') }}
 </p>
 </div>
 </section>

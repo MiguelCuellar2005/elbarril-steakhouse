@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, app
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
@@ -23,6 +23,13 @@ def create_app():
     @app.context_processor
     def inject_idioma():
         from flask import session
-        return {"idioma": session.get("idioma", "es")}
+        from app.translations import traducir
+
+        idioma_actual = session.get("idioma", "es")
+
+        def t(clave):
+            return traducir(clave, idioma_actual)
+
+        return {"idioma": idioma_actual, "t": t}
 
     return app
