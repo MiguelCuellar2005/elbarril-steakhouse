@@ -243,4 +243,20 @@ def evento_eliminar(evento_id):
     db.session.delete(evento)
     db.session.commit()
     return redirect(url_for("admin.eventos"))
+# ---------- SOLICITUDES DE CATERING ----------
+
+@admin_bp.route("/catering")
+@admin_requerido
+def catering():
+    solicitudes = SolicitudCatering.query.order_by(SolicitudCatering.fecha_creacion.desc()).all()
+    return render_template("admin/catering.html", solicitudes=solicitudes)
+
+
+@admin_bp.route("/catering/<int:solicitud_id>/toggle", methods=["POST"])
+@admin_requerido
+def catering_toggle(solicitud_id):
+    solicitud = SolicitudCatering.query.get_or_404(solicitud_id)
+    solicitud.atendida = not solicitud.atendida
+    db.session.commit()
+    return redirect(url_for("admin.catering"))
 
