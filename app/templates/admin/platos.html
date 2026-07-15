@@ -4,29 +4,12 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Gestión de Menú - El Barril Steak House</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,600;6..72,700&family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        theme: {
-          extend: {
-            "colors": {
-                    "on-surface": "#1a1c1d", "primary": "#650006", "on-surface-variant": "#5a403e",
-                    "surface": "#f9f9fa", "error": "#ba1a1a", "surface-container-lowest": "#ffffff",
-                    "primary-container": "#8f000d", "on-primary": "#ffffff", "surface-dim": "#dadadb"
-            },
-            "fontFamily": {
-                    "headline-md": ["Newsreader"], "label-lg": ["Be Vietnam Pro"], "label-md": ["Be Vietnam Pro"]
-            }
-          },
-        },
-      }
-    </script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="{{ url_for('static', filename='js/tailwind-config.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 <style>
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .toggle-checkbox:checked + .toggle-label { background-color: #8f000d; }
-        .toggle-checkbox:checked + .toggle-label .toggle-dot { transform: translateX(100%); }
         body { background-color: #fdfaf5; }
 </style>
 </head>
@@ -73,7 +56,7 @@
 {% endfor %}
 
 {% if not categorias %}
-<p class="text-center text-on-surface-variant py-12">Aún no tienes categorías creadas. Crea una desde el script de datos de prueba o pide ayuda a Claude para agregar la gestión de categorías.</p>
+<p class="text-center text-on-surface-variant py-12">Aún no tienes categorías creadas.</p>
 {% endif %}
 </div>
 
