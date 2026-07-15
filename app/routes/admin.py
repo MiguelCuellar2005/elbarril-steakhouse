@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, current_app
-from app.models import Plato, Categoria, Promocion, Evento, SolicitudCatering
+from app.models import Plato, Categoria, Promocion, Evento, SolicitudCatering, Historia, FotoGaleria
 from app import db
 from datetime import date
 from functools import wraps
@@ -287,3 +287,80 @@ def catering_toggle(solicitud_id):
     db.session.commit()
     return redirect(url_for("admin.catering"))
 
+# ---------- HISTORIA ----------
+
+@admin_bp.route("/historia", methods=["GET", "POST"])
+@admin_requerido
+def historia():
+    hist = Historia.query.first()
+    if not hist:
+        hist = Historia(texto_es="", texto_en="", texto_fr="")
+        db.session.add(hist)
+        db.session.commit()
+
+    if request.method == "POST":
+        hist.texto_es = request.form.get("texto_es")
+        hist.texto_en = request.form.get("texto_en")
+        hist.texto_fr = request.form.get("texto_fr")
+        db.session.commit()
+        return redirect(url_for("admin.historia"))
+
+    fotos = FotoGaleria.query.filter_by(seccion="historia").order_by(FotoGaleria.orden).all()
+    return render_template("admin/historia.html", historia=hist, fotos=fotos)
+
+
+@admin_bp.route("/historia/foto/subir", methods=["POST"])
+@admin_requerido
+def historia_foto_subir():
+    nombre_imagen = guardar_imagen(request.files.get("imagen"))
+    if nombre_imagen:
+        foto = FotoGaleria(
+            seccion="historia",
+            imagen=nombre_imagen,
+            descripcion=request.form.get("descripcion")
+        )
+        db.session.add(foto)
+        db.session.commit()
+    return redirect(url_for("admin.historia"))
+
+
+@admin_bp.route("/historia/foto/<int:foto_id>/eliminar", methods=["POST"])
+@admin_requerido
+def historia_foto_eliminar(foto_id):
+    foto = FotoGaleria.query.get_or_404(foto_id)
+    db.session.delete(foto)
+    db.session.commit()
+    return redirect(url_for("admin.historia"))
+
+
+# ---------- GALERÍA GENERAL ----------
+
+@admin_bp.route("/galeria")
+@admin_requerido
+def galeria():
+    fotos = FotoGaleria.query.filter_by(seccion="galeria").order_by(FotoGaleria.orden).all()
+    return render_template("admin/galeria.html", fotos=fotos)
+
+
+@admin_bp.route("/galeria/subir", methods=["POST"])
+@admin_requerido
+def galeria_foto_subir():
+    nombre_imagen = guardar_imagen(request.files.get("imagen"))
+    if nombre_imagen:
+        foto = FotoGaleria(
+            seccion="galeria",
+            imagen=nombre_imagen,
+            descripcion=request.form.get("descripcion")
+        )
+        db.session.add(foto)
+        db.session.commit()
+    return redirect(url_for("admin.galeria"))
+
+
+@admin_bp.route("/galeria/<int:foto_id>/eliminar", methods=["POST"])
+@admin_requerido
+def galeria_foto_eliminar(foto_id):
+    foto = FotoGaleria.query.get_or_404(foto_id)
+    db.session.delete(foto)
+    db.session.commit()
+    return redirect(url_for("admin.galeria"))

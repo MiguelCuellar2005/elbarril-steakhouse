@@ -97,3 +97,25 @@ class SolicitudCatering(db.Model):
     mensaje = db.Column(db.Text)
     fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
     atendida = db.Column(db.Boolean, default=False)
+
+class Historia(db.Model):
+    __tablename__ = "historia"
+
+    id = db.Column(db.Integer, primary_key=True)
+    texto_es = db.Column(db.Text)
+    texto_en = db.Column(db.Text)
+    texto_fr = db.Column(db.Text)
+
+    def texto(self, idioma="es"):
+        campo = getattr(self, f"texto_{idioma}", None)
+        return campo or self.texto_es
+
+
+class FotoGaleria(db.Model):
+    __tablename__ = "fotos_galeria"
+
+    id = db.Column(db.Integer, primary_key=True)
+    seccion = db.Column(db.String(20), nullable=False, default="galeria")  # "galeria" o "historia"
+    imagen = db.Column(db.String(255), nullable=False)
+    descripcion = db.Column(db.String(255))
+    orden = db.Column(db.Integer, default=0)

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, request, flash, redirect, url_for
-from app.models import Categoria, Promocion, Evento, SolicitudCatering
+from app.models import Categoria, FotoGaleria, Promocion, Evento, SolicitudCatering, Historia
 from app import db
 from datetime import date, datetime
 
@@ -19,10 +19,15 @@ def home():
         Evento.fecha >= hoy
     ).order_by(Evento.fecha).limit(3).all()
 
+    historia = Historia.query.first()
+    fotos_historia = FotoGaleria.query.filter_by(seccion="historia").order_by(FotoGaleria.orden).all()
+
     return render_template(
         "public/home.html",
         promociones=promociones_activas,
-        eventos=proximos_eventos
+        eventos=proximos_eventos,
+        historia=historia,
+        fotos_historia=fotos_historia
     )
 
 
@@ -67,3 +72,8 @@ def cambiar_idioma(lang):
     if lang in ("fr", "en", "es"):
         session["idioma"] = lang
     return redirect(request.referrer or url_for("public.home"))
+
+@public_bp.route("/galeria")
+def galeria():
+    fotos = FotoGaleria.query.filter_by(seccion="galeria").order_by(FotoGaleria.orden).all()
+    return render_template("public/galeria.html", fotos=fotos)

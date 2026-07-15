@@ -1,0 +1,24 @@
+{% extends "public/base.html" %}
+
+{% block content %}
+
+<section class="px-gutter pt-lg pb-md text-center">
+<h2 class="font-display-lg-mobile text-display-lg-mobile italic text-on-surface-variant">Galería</h2>
+<p class="font-body-md text-secondary mt-xs">Momentos, sabores y fuego — así vivimos El Barril.</p>
+</section>
+
+<div class="px-gutter pb-xl">
+{% if fotos %}
+<div class="grid grid-cols-2 md:grid-cols-3 gap-sm">
+{% for foto in fotos %}
+<div class="aspect-square rounded-lg overflow-hidden">
+<img src="{{ url_for('static', filename='uploads/' + foto.imagen) }}" class="w-full h-full object-cover" alt="{{ foto.descripcion or 'El Barril Steak House' }}">
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p class="text-center text-on-surface-variant py-12">Pronto vas a ver aquí fotos del food truck en acción.</p>
+{% endif %}
+</div>
+
+{% endblock %}

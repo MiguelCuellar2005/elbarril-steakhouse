@@ -14,15 +14,30 @@
 <body class="flex flex-col min-h-screen relative overflow-x-hidden">
 
 <header class="flex justify-between items-center px-gutter py-md w-full sticky top-0 z-50 bg-background border-b-2 border-on-surface-variant shadow-[0_4px_12px_rgba(43,29,21,0.15)]">
-<button class="active:scale-95 transition-transform text-primary" id="drawer-toggle">
+
+<button class="md:hidden active:scale-95 transition-transform text-primary" id="drawer-toggle">
 <span class="material-symbols-outlined">menu</span>
 </button>
-<h1 class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight text-primary">EL BARRIL</h1>
+
+<div class="flex flex-col items-center leading-none md:items-start">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight text-primary italic">EL BARRIL</h1>
+<span class="text-[10px] tracking-[0.3em] uppercase text-on-surface-variant -mt-1">Steak House</span>
+</div>
+
+<nav class="hidden md:flex items-center gap-xl">
+<a href="{{ url_for('public.home') }}" class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors">Inicio</a>
+<a href="{{ url_for('public.menu') }}" class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors">Menú</a>
+<a href="{{ url_for('public.galeria') }}" class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors">Galería</a>
+<a href="{{ url_for('public.home') }}#donde-estamos" class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors">Ubicación</a>
+<a href="{{ url_for('public.contacto') }}" class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors">Catering</a>
+</nav>
+
 <div class="flex gap-1">
 <a href="{{ url_for('public.cambiar_idioma', lang='es') }}" class="w-8 h-8 flex items-center justify-center rounded-full text-sm {% if idioma == 'es' %}bg-primary-container text-on-primary-container{% else %}text-on-surface-variant{% endif %}">ES</a>
 <a href="{{ url_for('public.cambiar_idioma', lang='fr') }}" class="w-8 h-8 flex items-center justify-center rounded-full text-sm {% if idioma == 'fr' %}bg-primary-container text-on-primary-container{% else %}text-on-surface-variant{% endif %}">FR</a>
 <a href="{{ url_for('public.cambiar_idioma', lang='en') }}" class="w-8 h-8 flex items-center justify-center rounded-full text-sm {% if idioma == 'en' %}bg-primary-container text-on-primary-container{% else %}text-on-surface-variant{% endif %}">EN</a>
 </div>
+
 </header>
 
 <div class="fixed inset-y-0 left-0 z-[60] flex flex-col p-lg bg-surface-container shadow-xl h-full w-80 -translate-x-full transition-transform duration-300" id="nav-drawer">
@@ -35,6 +50,9 @@
 <nav class="flex flex-col gap-sm">
 <a class="bg-primary-container text-on-primary-container rounded-lg px-md py-sm font-label-lg text-label-lg flex items-center gap-md" href="{{ url_for('public.menu') }}">
 <span class="material-symbols-outlined">restaurant_menu</span> Menú
+</a>
+<a class="text-on-surface-variant px-md py-sm font-label-lg text-label-lg hover:bg-surface-container-highest transition-all duration-200 flex items-center gap-md" href="{{ url_for('public.galeria') }}">
+<span class="material-symbols-outlined">photo_library</span> Galería
 </a>
 <a class="text-on-surface-variant px-md py-sm font-label-lg text-label-lg hover:bg-surface-container-highest transition-all duration-200 flex items-center gap-md" href="{{ url_for('public.home') }}#donde-estamos">
 <span class="material-symbols-outlined">location_on</span> Ubicación

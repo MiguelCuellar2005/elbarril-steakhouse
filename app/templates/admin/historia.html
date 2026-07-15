@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Editar Historia - El Barril</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="{{ url_for('static', filename='js/tailwind-config.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+<style>
+        body { background-color: #f9f9fa; }
+</style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+
+<header class="w-full border-b-2 border-on-surface/10 bg-surface flex items-center justify-between px-4 h-14 fixed top-0 z-50">
+<a href="{{ url_for('admin.dashboard') }}" class="flex items-center gap-1 text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined">arrow_back</span>
+<span class="font-label-lg text-sm">Volver</span>
+</a>
+<h1 class="font-headline-sm text-xl text-primary font-bold">Nuestra Historia</h1>
+<div class="w-16"></div>
+</header>
+
+<main class="w-full max-w-2xl pt-20 pb-12 px-4 space-y-6">
+
+<form method="POST" class="space-y-6">
+<section class="bg-surface-container-low p-4 rounded-lg border border-on-surface/10">
+<div class="flex items-center gap-2 mb-3 text-primary">
+<span class="material-symbols-outlined">translate</span>
+<h2 class="font-label-lg text-sm uppercase">Texto de la Historia</h2>
+</div>
+<div class="space-y-3">
+<div>
+<label class="block font-label-md text-sm text-on-surface-variant mb-1">Español</label>
+<textarea class="w-full p-3 bg-white border-2 border-on-surface/10 rounded-lg resize-none" name="texto_es" rows="4">{{ historia.texto_es or '' }}</textarea>
+</div>
+<div>
+<label class="block font-label-md text-sm text-on-surface-variant mb-1">English</label>
+<textarea class="w-full p-3 bg-white border-2 border-on-surface/10 rounded-lg resize-none" name="texto_en" rows="4">{{ historia.texto_en or '' }}</textarea>
+</div>
+<div>
+<label class="block font-label-md text-sm text-on-surface-variant mb-1">Français</label>
+<textarea class="w-full p-3 bg-white border-2 border-on-surface/10 rounded-lg resize-none" name="texto_fr" rows="4">{{ historia.texto_fr or '' }}</textarea>
+</div>
+</div>
+</section>
+
+<button type="submit" class="w-full h-14 bg-primary text-on-primary font-label-lg text-lg rounded-lg shadow-md flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">save</span> Guardar Texto
+</button>
+</form>
+
+<section class="bg-surface-container-low p-4 rounded-lg border border-on-surface/10">
+<div class="flex items-center gap-2 mb-3 text-primary">
+<span class="material-symbols-outlined">photo_library</span>
+<h2 class="font-label-lg text-sm uppercase">Fotos de la Historia</h2>
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+{% for foto in fotos %}
+<div class="relative rounded-lg overflow-hidden aspect-square">
+<img src="{{ url_for('static', filename='uploads/' + foto.imagen) }}" class="w-full h-full object-cover">
+<form method="POST" action="{{ url_for('admin.historia_foto_eliminar', foto_id=foto.id) }}" class="absolute top-1 right-1">
+<button type="submit" class="w-7 h-7 bg-white/90 rounded-full flex items-center justify-center text-error" onclick="return confirm('¿Eliminar esta foto?')">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</form>
+</div>
+{% endfor %}
+</div>
+
+<form method="POST" action="{{ url_for('admin.historia_foto_subir') }}" enctype="multipart/form-data" class="space-y-2">
+<input type="file" name="imagen" accept="image/*" required class="w-full text-sm">
+<input type="text" name="descripcion" placeholder="Descripción (opcional)" class="w-full h-10 px-3 bg-white border-2 border-on-surface/10 rounded-lg text-sm">
+<button type="submit" class="w-full h-10 bg-primary text-on-primary rounded-lg text-sm font-label-md">Agregar Foto</button>
+</form>
+</section>
+
+</main>
+</body>
+</html>

@@ -78,8 +78,22 @@
 <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background mb-lg italic">{{ t('historia_titulo') }}</h2>
 <div class="w-12 h-1 bg-primary mb-xl"></div>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-xl leading-relaxed">
+{% if historia and historia.texto(idioma) %}
+    {{ historia.texto(idioma) }}
+{% else %}
     {{ t('historia_texto') }}
+{% endif %}
 </p>
+
+{% if fotos_historia %}
+<div class="grid grid-cols-2 md:grid-cols-4 gap-sm w-full max-w-2xl">
+{% for foto in fotos_historia %}
+<div class="aspect-square rounded-lg overflow-hidden">
+<img src="{{ url_for('static', filename='uploads/' + foto.imagen) }}" class="w-full h-full object-cover" alt="{{ foto.descripcion or '' }}">
+</div>
+{% endfor %}
+</div>
+{% endif %}
 </div>
 </section>
 
