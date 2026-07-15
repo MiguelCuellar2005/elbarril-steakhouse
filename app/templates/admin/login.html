@@ -1,1 +1,95 @@
-<h1>Login Admin (en construcción)</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EL BARRIL - Admin Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Newsreader:ital,wght@1,500;1,600;1,700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "primary": "#650006",
+                    "on-surface": "#201a17",
+                    "on-primary-container": "#ff958b",
+                    "surface": "#fff8f5",
+                    "on-surface-variant": "#5a403e",
+                    "outline-variant": "#e2beba",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "outline": "#8e706d",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#8f000d"
+            },
+            "fontFamily": {
+                    "label-lg": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "display-lg": ["Newsreader"],
+                    "label-md": ["Be Vietnam Pro"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { background-color: #fff8f5; }
+        .rustic-input:focus { border-color: #8f000d; box-shadow: 0 0 0 1px #8f000d; }
+</style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+<main class="w-full max-w-[440px] flex flex-col items-center">
+
+<header class="text-center mb-8">
+<div class="mb-4 inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary-container text-on-primary">
+<span class="material-symbols-outlined text-4xl">restaurant</span>
+</div>
+<h1 class="font-display-lg text-4xl text-primary italic mb-2 tracking-tight">EL BARRIL</h1>
+<p class="font-label-lg text-sm uppercase text-on-surface-variant tracking-[0.2em]">Panel Admin</p>
+</header>
+
+<section class="w-full bg-surface-container-lowest border border-outline-variant p-8 shadow-sm rounded-lg">
+<form class="space-y-6" method="POST">
+
+{% if error %}
+<div class="flex items-center gap-3 p-4 bg-error-container text-on-error-container rounded-lg border border-red-300">
+<span class="material-symbols-outlined text-sm">error</span>
+<p class="font-label-md text-sm">{{ error }}</p>
+</div>
+{% endif %}
+
+<div class="space-y-2">
+<label class="block font-label-lg text-sm text-on-surface-variant" for="usuario">Usuario</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-xl">person</span>
+<input class="rustic-input w-full min-h-[56px] pl-12 pr-4 bg-surface border border-outline-variant rounded-lg font-body-md outline-none transition-all" id="usuario" name="usuario" placeholder="Ingrese su usuario" required type="text"/>
+</div>
+</div>
+
+<div class="space-y-2">
+<label class="block font-label-lg text-sm text-on-surface-variant" for="contrasena">Contraseña</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-xl">lock</span>
+<input class="rustic-input w-full min-h-[56px] pl-12 pr-4 bg-surface border border-outline-variant rounded-lg font-body-md outline-none transition-all" id="contrasena" name="contrasena" placeholder="••••••••" required type="password"/>
+</div>
+</div>
+
+<button class="w-full min-h-[56px] bg-primary-container text-on-primary font-label-lg rounded-lg transition-all active:scale-[0.98] hover:brightness-110 shadow-md flex items-center justify-center gap-2 mt-8" type="submit">
+<span>INICIAR SESIÓN</span>
+<span class="material-symbols-outlined text-xl">login</span>
+</button>
+
+</form>
+</section>
+
+<footer class="mt-8 text-center text-on-surface-variant/60 font-label-md text-xs">
+    © 2026 EL BARRIL Steak House
+</footer>
+
+</main>
+</body>
+</html>

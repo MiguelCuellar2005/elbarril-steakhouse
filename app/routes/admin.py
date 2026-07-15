@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, current_app
+from app.models import Plato, Promocion, Evento, SolicitudCatering
+from datetime import date
 
 admin_bp = Blueprint("admin", __name__)
 
@@ -36,8 +38,23 @@ def login():
 @admin_bp.route("/dashboard")
 @admin_requerido
 def dashboard():
-    # TODO: mostrar resumen de promos activas, próximos eventos, platos
-    return render_template("admin/dashboard.html")
+    hoy = date.today()
+
+    total_platos = Plato.query.count()
+    promos_activas = Promocion.query.filter(
+        Promocion.fecha_inicio <= hoy,
+        Promocion.fecha_fin >= hoy
+    ).count()
+    proximos_eventos = Evento.query.filter(Evento.fecha >= hoy).count()
+    catering_pendiente = SolicitudCatering.query.filter_by(atendida=False).count()
+
+    return render_template(
+        "admin/dashboard.html",
+        total_platos=total_platos,
+        promos_activas=promos_activas,
+        proximos_eventos=proximos_eventos,
+        catering_pendiente=catering_pendiente
+    )
 
 
 @admin_bp.route("/logout")
